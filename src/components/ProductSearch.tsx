@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { WishlistItem } from '../types';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
+import { PlaceholderImage } from './ui/PlaceholderImage';
 
 interface ProductSearchResult {
   name: string;
@@ -51,21 +52,21 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({
           name: `${searchQuery} - Premium Model`,
           price: 299.99,
           url: `https://example.com/product/${searchQuery.toLowerCase().replace(/\s+/g, '-')}`,
-          image: 'https://via.placeholder.com/150x150?text=Product',
+          image: '', // Will use PlaceholderImage component instead
           source: 'Amazon'
         },
         {
           name: `${searchQuery} - Standard Edition`,
           price: 199.99,
           url: `https://example.com/product/${searchQuery.toLowerCase().replace(/\s+/g, '-')}-standard`,
-          image: 'https://via.placeholder.com/150x150?text=Product',
+          image: '', // Will use PlaceholderImage component instead
           source: 'eBay'
         },
         {
           name: `${searchQuery} - Budget Option`,
           price: 99.99,
           url: `https://example.com/product/${searchQuery.toLowerCase().replace(/\s+/g, '-')}-budget`,
-          image: 'https://via.placeholder.com/150x150?text=Product',
+          image: '', // Will use PlaceholderImage component instead
           source: 'Best Buy'
         }
       ];
@@ -174,17 +175,13 @@ export const ProductSearch: React.FC<ProductSearchProps> = ({
               >
                 {/* Product Image */}
                 <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center overflow-hidden">
-                  {result.image ? (
-                    <img 
-                      src={result.image} 
-                      alt={result.name}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="text-gray-400 text-xs text-center">
-                      No Image
-                    </div>
-                  )}
+                  <PlaceholderImage 
+                    width={64}
+                    height={64}
+                    text="IMG"
+                    alt={result.name}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 
                 {/* Product Info */}

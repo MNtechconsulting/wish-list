@@ -39,12 +39,16 @@ describe('Dashboard useWishlist Hook Integration', () => {
       items: [],
       isLoading: false,
       error: null,
+      isNetworkError: false,
+      collectionCountsChanged: false,
       addItem: mockAddItem,
       updateItem: jest.fn(),
       deleteItem: jest.fn(),
       getItem: jest.fn(),
       refreshItems: jest.fn(),
       clearError: mockClearError,
+      clearCollectionCountsChanged: jest.fn(),
+      retryLastOperation: jest.fn()
     });
 
     // Mock API service methods
@@ -84,12 +88,16 @@ describe('Dashboard useWishlist Hook Integration', () => {
       items: [],
       isLoading: false,
       error: errorMessage,
+      isNetworkError: false,
+      collectionCountsChanged: false,
       addItem: mockAddItem,
       updateItem: jest.fn(),
       deleteItem: jest.fn(),
       getItem: jest.fn(),
       refreshItems: jest.fn(),
       clearError: mockClearError,
+      clearCollectionCountsChanged: jest.fn(),
+      retryLastOperation: jest.fn()
     });
 
     renderDashboard();
@@ -105,12 +113,16 @@ describe('Dashboard useWishlist Hook Integration', () => {
       items: [],
       isLoading: false,
       error: errorMessage,
+      isNetworkError: false,
+      collectionCountsChanged: false,
       addItem: mockAddItem,
       updateItem: jest.fn(),
       deleteItem: jest.fn(),
       getItem: jest.fn(),
       refreshItems: jest.fn(),
       clearError: mockClearError,
+      clearCollectionCountsChanged: jest.fn(),
+      retryLastOperation: jest.fn()
     });
 
     renderDashboard();

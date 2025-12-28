@@ -116,7 +116,7 @@ async def create_wishlist_item(
         user_id=current_user.id,
         collection_id=item_data.collection_id,
         title=item_data.title,
-        product_url=item_data.product_url,
+        product_url=str(item_data.product_url) if item_data.product_url else None,
         initial_price=item_data.initial_price,
         current_price=item_data.initial_price,  # Start with initial price
         currency=item_data.currency or "USD"
@@ -224,6 +224,9 @@ async def update_wishlist_item(
     # Update item fields
     update_data = item_data.model_dump(exclude_unset=True)
     for field, value in update_data.items():
+        # Convert HttpUrl to string for product_url field
+        if field == 'product_url' and value is not None:
+            value = str(value)
         setattr(item, field, value)
     
     await db.commit()

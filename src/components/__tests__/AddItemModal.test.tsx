@@ -41,7 +41,6 @@ jest.mock('../AddItemForm', () => ({
     onSubmit, 
     onCancel, 
     prefilledData,
-    collections,
     selectedCollection
   }: {
     onSubmit: (item: WishlistItem) => void;

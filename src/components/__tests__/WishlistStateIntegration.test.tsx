@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Dashboard } from '../Dashboard';
 import { WishlistItem, WishlistCollection } from '../../types';
@@ -118,10 +118,10 @@ describe('Wishlist State Management Integration Tests', () => {
       productUrl: 'https://example.com/item1',
       imageUrl: 'https://example.com/image1.jpg',
       collectionId: '1',
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      dateAdded: new Date(),
       trend: 'down' as const,
-      daysTracked: 5
+      daysTracked: 5,
+      priceHistory: []
     }
   ];
 
@@ -129,10 +129,14 @@ describe('Wishlist State Management Integration Tests', () => {
   const mockAddItem = jest.fn();
   const mockUpdateItem = jest.fn();
   const mockDeleteItem = jest.fn();
+  const mockGetItem = jest.fn();
+  const mockRefreshItems = jest.fn();
   const mockClearError = jest.fn();
   const mockClearCollectionCountsChanged = jest.fn();
   const mockRetryLastOperation = jest.fn();
   const mockCreateCollection = jest.fn();
+  const mockUpdateCollection = jest.fn();
+  const mockDeleteCollection = jest.fn();
   const mockSelectCollection = jest.fn();
   const mockRefreshCollections = jest.fn();
   const mockClearCollectionsError = jest.fn();
@@ -150,6 +154,8 @@ describe('Wishlist State Management Integration Tests', () => {
       addItem: mockAddItem,
       updateItem: mockUpdateItem,
       deleteItem: mockDeleteItem,
+      getItem: mockGetItem,
+      refreshItems: mockRefreshItems,
       clearError: mockClearError,
       clearCollectionCountsChanged: mockClearCollectionCountsChanged,
       retryLastOperation: mockRetryLastOperation
@@ -162,6 +168,8 @@ describe('Wishlist State Management Integration Tests', () => {
       isLoading: false,
       error: null,
       createCollection: mockCreateCollection,
+      updateCollection: mockUpdateCollection,
+      deleteCollection: mockDeleteCollection,
       selectCollection: mockSelectCollection,
       refreshCollections: mockRefreshCollections,
       clearError: mockClearCollectionsError
@@ -287,6 +295,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -310,6 +320,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -338,6 +350,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -370,6 +384,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -403,6 +419,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -436,6 +454,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -469,6 +489,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -505,6 +527,8 @@ describe('Wishlist State Management Integration Tests', () => {
         addItem: mockAddItem,
         updateItem: mockUpdateItem,
         deleteItem: mockDeleteItem,
+        getItem: mockGetItem,
+        refreshItems: mockRefreshItems,
         clearError: mockClearError,
         clearCollectionCountsChanged: mockClearCollectionCountsChanged,
         retryLastOperation: mockRetryLastOperation
@@ -534,6 +558,8 @@ describe('Wishlist State Management Integration Tests', () => {
         isLoading: true, // Loading state
         error: null,
         createCollection: mockCreateCollection,
+        updateCollection: mockUpdateCollection,
+        deleteCollection: mockDeleteCollection,
         selectCollection: mockSelectCollection,
         refreshCollections: mockRefreshCollections,
         clearError: mockClearCollectionsError
@@ -552,6 +578,8 @@ describe('Wishlist State Management Integration Tests', () => {
         isLoading: false,
         error: collectionsError,
         createCollection: mockCreateCollection,
+        updateCollection: mockUpdateCollection,
+        deleteCollection: mockDeleteCollection,
         selectCollection: mockSelectCollection,
         refreshCollections: mockRefreshCollections,
         clearError: mockClearCollectionsError

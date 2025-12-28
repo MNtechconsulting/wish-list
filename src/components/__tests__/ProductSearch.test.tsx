@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { ProductSearch } from '../ProductSearch';
@@ -59,7 +58,7 @@ describe('ProductSearch', () => {
 
   // Test the event handling logic directly by mocking the search results
   it('handles product selection correctly', () => {
-    const { rerender } = render(
+    render(
       <ProductSearch 
         onSelectProduct={mockOnSelectProduct} 
         onClose={mockOnClose} 

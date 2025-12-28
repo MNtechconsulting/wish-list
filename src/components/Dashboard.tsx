@@ -26,8 +26,6 @@ export const Dashboard: React.FC = () => {
     isNetworkError,
     collectionCountsChanged,
     addItem,
-    updateItem,
-    deleteItem,
     clearError,
     clearCollectionCountsChanged,
     retryLastOperation
@@ -89,24 +87,6 @@ export const Dashboard: React.FC = () => {
   };
 
   /**
-   * Handle updating an existing item
-   */
-  const handleUpdateItem = async (itemId: string, updates: Partial<WishlistItem>, collectionId?: number) => {
-    const success = await updateItem(itemId, updates, collectionId);
-    // Collection counts will be refreshed automatically via useEffect if collection changed
-    return success;
-  };
-
-  /**
-   * Handle deleting an item
-   */
-  const handleDeleteItem = async (itemId: string) => {
-    const success = await deleteItem(itemId);
-    // Collection counts will be refreshed automatically via useEffect
-    return success;
-  };
-
-  /**
    * Handle clicking on a wishlist item (navigate to detail page)
    */
   const handleItemClick = (itemId: string) => {
@@ -159,7 +139,12 @@ export const Dashboard: React.FC = () => {
 
   // Filter items by selected collection
   const filteredItems = selectedCollection 
-    ? wishlistItems.filter(item => item.collectionId === selectedCollection.id)
+    ? wishlistItems.filter(item => {
+        // Ensure both values are strings for comparison
+        const itemCollectionId = String(item.collectionId);
+        const selectedCollectionIdStr = String(selectedCollection.id);
+        return itemCollectionId === selectedCollectionIdStr;
+      })
     : [];
 
   return (

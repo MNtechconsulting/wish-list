@@ -8,4 +8,5 @@ export { Card } from './Card';
 export { Input } from './Input';
 export { Modal } from './Modal';
 export { Loading, LoadingOverlay, InlineLoading } from './Loading';
+export { PlaceholderImage } from './PlaceholderImage';
 export * from './Icons';

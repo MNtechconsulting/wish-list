@@ -5,8 +5,6 @@
 
 const API_BASE_URL = 'http://localhost:8000';
 
-console.log('🔧 API Service initialized with base URL:', API_BASE_URL);
-
 export interface LoginRequest {
   email: string;
   password: string;
@@ -94,33 +92,24 @@ class ApiService {
 
   // Authentication endpoints
   async register(data: RegisterRequest): Promise<User> {
-    console.log('🔄 Attempting registration with:', { email: data.email });
-    
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
     
-    console.log('📡 Registration response status:', response.status);
-    console.log('📡 Registration response headers:', Object.fromEntries(response.headers.entries()));
-    
     if (!response.ok) {
       const errorText = await response.text();
-      console.error('❌ Registration failed with response:', errorText);
       
       try {
         const errorData = JSON.parse(errorText);
-        console.error('❌ Parsed error data:', errorData);
         throw new ApiError(response.status, errorData.message || 'Registration failed', errorData);
       } catch (parseError) {
-        console.error('❌ Could not parse error response:', parseError);
         throw new ApiError(response.status, 'Registration failed', { originalError: errorText });
       }
     }
     
     const result = await response.json();
-    console.log('✅ Registration successful:', result);
     return result;
   }
 
@@ -217,6 +206,7 @@ class ApiService {
       headers: this.getAuthHeaders(),
       body: JSON.stringify(data)
     });
+    
     return this.handleResponse<WishlistItemAPI>(response);
   }
 

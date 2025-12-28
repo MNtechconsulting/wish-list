@@ -3,8 +3,7 @@
  * Validates Requirements 4.1, 4.2, 4.3, 4.4
  */
 
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Dashboard } from '../Dashboard';
 import { AddItemModal } from '../AddItemModal';
@@ -14,12 +13,14 @@ import { WishlistCollection } from '../../types';
 const mockUseWishlist = {
   items: [],
   isLoading: false,
-  error: null,
+  error: null as string | null,
   isNetworkError: false,
   collectionCountsChanged: false,
   addItem: jest.fn(),
   updateItem: jest.fn(),
   deleteItem: jest.fn(),
+  getItem: jest.fn(),
+  refreshItems: jest.fn(),
   clearError: jest.fn(),
   clearCollectionCountsChanged: jest.fn(),
   retryLastOperation: jest.fn()
@@ -33,12 +34,28 @@ jest.mock('../../hooks/useWishlist', () => ({
 jest.mock('../../hooks/useCollections', () => ({
   useCollections: () => ({
     collections: [
-      { id: '1', name: 'Test Collection', isDefault: true, itemCount: 0 }
+      { 
+        id: '1', 
+        name: 'Test Collection', 
+        isDefault: true, 
+        itemCount: 0,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
     ],
-    selectedCollection: { id: '1', name: 'Test Collection', isDefault: true, itemCount: 0 },
+    selectedCollection: { 
+      id: '1', 
+      name: 'Test Collection', 
+      isDefault: true, 
+      itemCount: 0,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    },
     isLoading: false,
     error: null,
     createCollection: jest.fn(),
+    updateCollection: jest.fn(),
+    deleteCollection: jest.fn(),
     selectCollection: jest.fn(),
     refreshCollections: jest.fn(),
     clearError: jest.fn()
@@ -46,7 +63,14 @@ jest.mock('../../hooks/useCollections', () => ({
 }));
 
 const mockCollections: WishlistCollection[] = [
-  { id: '1', name: 'Test Collection', isDefault: true, itemCount: 0 }
+  { 
+    id: '1', 
+    name: 'Test Collection', 
+    isDefault: true, 
+    itemCount: 0,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
 ];
 
 describe('Error Handling', () => {

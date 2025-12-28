@@ -2,8 +2,7 @@
  * Tests for Dashboard component collection count update functionality
  */
 
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Dashboard } from '../Dashboard';
 import { useWishlist } from '../../hooks/useWishlist';
@@ -62,6 +61,7 @@ describe('Dashboard - Collection Count Updates', () => {
       items: [],
       isLoading: false,
       error: null,
+      isNetworkError: false,
       collectionCountsChanged: false,
       addItem: jest.fn(),
       updateItem: jest.fn(),
@@ -69,7 +69,8 @@ describe('Dashboard - Collection Count Updates', () => {
       getItem: jest.fn(),
       refreshItems: jest.fn(),
       clearError: jest.fn(),
-      clearCollectionCountsChanged: mockClearCollectionCountsChanged
+      clearCollectionCountsChanged: mockClearCollectionCountsChanged,
+      retryLastOperation: jest.fn()
     });
   });
 
@@ -93,6 +94,7 @@ describe('Dashboard - Collection Count Updates', () => {
       items: [],
       isLoading: false,
       error: null,
+      isNetworkError: false,
       collectionCountsChanged: true, // Changed to true
       addItem: jest.fn(),
       updateItem: jest.fn(),
@@ -100,7 +102,8 @@ describe('Dashboard - Collection Count Updates', () => {
       getItem: jest.fn(),
       refreshItems: jest.fn(),
       clearError: jest.fn(),
-      clearCollectionCountsChanged: mockClearCollectionCountsChanged
+      clearCollectionCountsChanged: mockClearCollectionCountsChanged,
+      retryLastOperation: jest.fn()
     });
 
     // Re-render to trigger the effect
