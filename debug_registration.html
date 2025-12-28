@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Registration</title>
+</head>
+<body>
+    <h1>Debug Registration API</h1>
+    <button onclick="testRegistration()">Test Registration</button>
+    <div id="result"></div>
+
+    <script>
+        async function testRegistration() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                console.log('🚀 Starting registration test...');
+                
+                const response = await fetch('http://localhost:8001/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: 'test' + Date.now() + '@example.com',
+                        password: 'testpass123'
+                    })
+                });
+                
+                console.log('📡 Response received:', response);
+                console.log('📡 Response status:', response.status);
+                console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+                
+                const data = await response.json();
+                console.log('📦 Response data:', data);
+                
+                if (response.ok) {
+                    resultDiv.innerHTML = `<div style="color: green;">✅ Success: ${JSON.stringify(data, null, 2)}</div>`;
+                } else {
+                    resultDiv.innerHTML = `<div style="color: red;">❌ Error ${response.status}: ${JSON.stringify(data, null, 2)}</div>`;
+                }
+                
+            } catch (error) {
+                console.error('❌ Network error:', error);
+                resultDiv.innerHTML = `<div style="color: red;">❌ Network Error: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

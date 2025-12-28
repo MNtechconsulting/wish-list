@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Add Item Button</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background: linear-gradient(135deg, #f8f7ff 0%, #fef7f7 50%, #f0fdf9 100%);
+            min-height: 100vh;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 2px 15px -3px rgba(0, 0, 0, 0.07);
+        }
+        .button { 
+            background: #9d7bff; 
+            color: white; 
+            padding: 12px 24px; 
+            border: none; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 500;
+            transition: all 0.2s;
+            margin: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .button:hover { 
+            background: #8b5cf6; 
+            transform: scale(1.05);
+        }
+        .button:active {
+            transform: scale(0.95);
+        }
+        .button:disabled { 
+            background: #ccc; 
+            cursor: not-allowed; 
+            transform: none;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 64px 16px;
+        }
+        .empty-icon {
+            width: 96px;
+            height: 96px;
+            margin: 0 auto 24px;
+            background: #f0edff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s;
+        }
+        .empty-icon:hover {
+            transform: scale(1.1);
+        }
+        .plus-icon {
+            width: 48px;
+            height: 48px;
+            color: #b8a1ff;
+        }
+        .result { 
+            margin-top: 20px; 
+            padding: 15px; 
+            border-radius: 8px; 
+            border: 1px solid #ddd;
+        }
+        .success { 
+            background: #d4edda; 
+            color: #155724; 
+            border-color: #c3e6cb; 
+        }
+        .error { 
+            background: #f8d7da; 
+            color: #721c24; 
+            border-color: #f5c6cb; 
+        }
+        .info { 
+            background: #d1ecf1; 
+            color: #0c5460; 
+            border-color: #bee5eb; 
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .test-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Debug Add Item Button</h1>
+        <p>This page tests different button scenarios to identify why the Add Item button might not be clickable.</p>
+        
+        <div class="grid">
+            <!-- Test 1: Basic Button -->
+            <div class="test-section">
+                <h3>Test 1: Basic Button</h3>
+                <p>Simple button with click handler</p>
+                <button class="button" onclick="showResult('Basic button clicked!', 'success')">
+                    <svg class="plus-icon" style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Basic Add Item
+                </button>
+            </div>
+
+            <!-- Test 2: Empty State Button -->
+            <div class="test-section">
+                <h3>Test 2: Empty State Simulation</h3>
+                <p>Simulates the empty wishlist state</p>
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <svg class="plus-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                    </div>
+                    <h3 style="font-size: 20px; font-weight: 600; color: #374151; margin-bottom: 12px;">Your wishlist is empty</h3>
+                    <p style="color: #6b7280; margin-bottom: 32px;">Start tracking products you want to buy.</p>
+                    <button class="button" onclick="showResult('Empty state button clicked!', 'success')">
+                        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                        </svg>
+                        Add Your First Item
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test 3: Disabled Button -->
+            <div class="test-section">
+                <h3>Test 3: Disabled Button</h3>
+                <p>Tests if button might be disabled</p>
+                <button class="button" disabled onclick="showResult('This should not work', 'error')">
+                    Disabled Button
+                </button>
+                <br>
+                <button class="button" onclick="showResult('Enabled button clicked!', 'success')">
+                    Enabled Button
+                </button>
+            </div>
+
+            <!-- Test 4: CSS Overlay Test -->
+            <div class="test-section">
+                <h3>Test 4: CSS Overlay Test</h3>
+                <p>Tests if invisible overlays are blocking clicks</p>
+                <div style="position: relative;">
+                    <button class="button" onclick="showResult('Button behind overlay clicked!', 'success')">
+                        Button Behind Overlay
+                    </button>
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255,0,0,0.1); pointer-events: none;">
+                        Transparent Overlay (pointer-events: none)
+                    </div>
+                </div>
+                <br>
+                <div style="position: relative;">
+                    <button class="button" onclick="showResult('This should not work', 'error')">
+                        Button Behind Blocking Overlay
+                    </button>
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,255,0,0.1);">
+                        Blocking Overlay
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test 5: Event Propagation -->
+            <div class="test-section">
+                <h3>Test 5: Event Propagation</h3>
+                <p>Tests event bubbling issues</p>
+                <div onclick="showResult('Parent div clicked', 'info')" style="padding: 20px; background: #e9ecef; border-radius: 8px; cursor: pointer;">
+                    Parent Div (clickable)
+                    <button class="button" onclick="event.stopPropagation(); showResult('Button with stopPropagation clicked!', 'success')">
+                        Button with stopPropagation
+                    </button>
+                </div>
+            </div>
+
+            <!-- Test 6: Authentication State -->
+            <div class="test-section">
+                <h3>Test 6: Authentication Simulation</h3>
+                <p>Tests if authentication affects button</p>
+                <div id="authTest">
+                    <p>Status: <span id="authStatus">Not logged in</span></p>
+                    <button class="button" onclick="simulateLogin()">Simulate Login</button>
+                    <button class="button" id="authButton" onclick="showResult('Auth-dependent button clicked!', 'success')" disabled>
+                        Add Item (Auth Required)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div id="result"></div>
+        
+        <!-- Browser Info -->
+        <div class="test-section" style="margin-top: 20px;">
+            <h3>Browser Information</h3>
+            <p><strong>User Agent:</strong> <span id="userAgent"></span></p>
+            <p><strong>Screen Size:</strong> <span id="screenSize"></span></p>
+            <p><strong>Viewport Size:</strong> <span id="viewportSize"></span></p>
+            <p><strong>JavaScript Enabled:</strong> ✅ Yes</p>
+        </div>
+    </div>
+
+    <script>
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<div class="result ${type}">${message}</div>`;
+            console.log(`[${type.toUpperCase()}] ${message}`);
+        }
+        
+        function simulateLogin() {
+            const authStatus = document.getElementById('authStatus');
+            const authButton = document.getElementById('authButton');
+            
+            authStatus.textContent = 'Logged in';
+            authStatus.style.color = 'green';
+            authButton.disabled = false;
+            authButton.style.background = '#9d7bff';
+            
+            showResult('Login simulated - button should now be enabled', 'success');
+        }
+        
+        // Display browser info
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('screenSize').textContent = `${screen.width}x${screen.height}`;
+        document.getElementById('viewportSize').textContent = `${window.innerWidth}x${window.innerHeight}`;
+        
+        // Test console logging
+        console.log('Debug page loaded successfully');
+        console.log('Testing console.log functionality');
+        
+        // Test for any JavaScript errors
+        window.addEventListener('error', function(e) {
+            showResult(`JavaScript Error: ${e.message} at ${e.filename}:${e.lineno}`, 'error');
+        });
+        
+        showResult('Debug page loaded. Try clicking the buttons above to test functionality.', 'info');
+    </script>
+</body>
+</html>

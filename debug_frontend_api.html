@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Frontend API</title>
+</head>
+<body>
+    <h1>Debug Frontend API</h1>
+    <button id="testRegister">Test Register</button>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('testRegister').addEventListener('click', async () => {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                console.log('🔄 Starting registration test...');
+                
+                const response = await fetch('http://localhost:8001/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'debug@example.com',
+                        password: 'debugpass123'
+                    })
+                });
+                
+                console.log('📡 Response status:', response.status);
+                console.log('📡 Response headers:', Object.fromEntries(response.headers.entries()));
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('❌ Registration failed:', errorText);
+                    resultDiv.innerHTML = `<div style="color: red;">Error ${response.status}: ${errorText}</div>`;
+                    return;
+                }
+                
+                const result = await response.json();
+                console.log('✅ Registration successful:', result);
+                resultDiv.innerHTML = `<div style="color: green;">Success: ${JSON.stringify(result, null, 2)}</div>`;
+                
+            } catch (error) {
+                console.error('❌ Network error:', error);
+                resultDiv.innerHTML = `<div style="color: red;">Network Error: ${error.message}</div>`;
+            }
+        });
+    </script>
+</body>
+</html>

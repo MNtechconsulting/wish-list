@@ -1,0 +1,168 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Earth theme variables - beige claro y tonos café */
+    --color-primary: #8B6F47;    /* Café - botones */
+    --color-secondary: #CBBFAE;  /* Arena - acentos */
+    --color-accent: #6B5B73;
+    --color-background: #F4EFEA; /* Beige claro - fondo principal */
+    --color-surface: #FFFFFF;    /* Blanco - cards */
+    --color-text-primary: #3F3F3F;   /* Texto principal */
+    --color-text-secondary: #5A5A5A;
+    --color-text-muted: #7A7A7A;     /* Texto suave */
+    --color-border: #E0D5C7;
+    --color-success: #6B8E23;
+    --color-warning: #CD853F;
+    --color-error: #A0522D;
+    --color-info: #708090;
+    
+    /* Shadow variables */
+    --shadow-small: 0 1px 3px 0 rgba(63, 63, 63, 0.1), 0 1px 2px 0 rgba(63, 63, 63, 0.06);
+    --shadow-medium: 0 4px 6px -1px rgba(63, 63, 63, 0.1), 0 2px 4px -1px rgba(63, 63, 63, 0.06);
+    --shadow-large: 0 10px 15px -3px rgba(63, 63, 63, 0.1), 0 4px 6px -2px rgba(63, 63, 63, 0.05);
+    
+    /* Theme transition timing */
+    --theme-transition-duration: 0.3s;
+    --theme-transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    transition: 
+      background-color var(--theme-transition-duration) var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  /* Respect user's motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --theme-transition-duration: 0.1s;
+    }
+    
+    body {
+      transition-duration: 0.1s;
+    }
+    
+    .theme-transition {
+      transition-duration: 0.1s !important;
+    }
+  }
+}
+
+@layer components {
+  /* Theme-aware utility classes with enhanced transitions */
+  .theme-surface {
+    background-color: var(--color-surface);
+    color: var(--color-text-primary);
+    transition: 
+      background-color var(--theme-transition-duration) var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  .theme-primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-primary);
+    transition: 
+      background-color var(--theme-transition-duration) var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  .theme-secondary {
+    background-color: var(--color-secondary);
+    color: var(--color-text-primary);
+    transition: 
+      background-color var(--theme-transition-duration) var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  .theme-accent {
+    background-color: var(--color-accent);
+    color: var(--color-text-primary);
+    transition: 
+      background-color var(--theme-transition-duration) var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  .theme-border {
+    border-color: var(--color-border);
+    transition: border-color var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  .theme-shadow-small {
+    box-shadow: var(--shadow-small);
+    transition: box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  .theme-shadow-medium {
+    box-shadow: var(--shadow-medium);
+    transition: box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  .theme-shadow-large {
+    box-shadow: var(--shadow-large);
+    transition: box-shadow var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  /* Enhanced smooth transitions for theme changes */
+  .theme-transition {
+    transition: 
+      background-color var(--theme-transition-duration) var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing),
+      border-color var(--theme-transition-duration) var(--theme-transition-timing),
+      box-shadow var(--theme-transition-duration) var(--theme-transition-timing),
+      fill var(--theme-transition-duration) var(--theme-transition-timing),
+      stroke var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  /* Optimized transitions for interactive elements */
+  .theme-interactive {
+    transition: 
+      background-color var(--theme-transition-duration) var(--theme-transition-timing),
+      color var(--theme-transition-duration) var(--theme-transition-timing),
+      border-color var(--theme-transition-duration) var(--theme-transition-timing),
+      box-shadow var(--theme-transition-duration) var(--theme-transition-timing),
+      transform 0.15s ease-out,
+      opacity 0.15s ease-out;
+  }
+  
+  /* Smooth transitions for text elements */
+  .theme-text {
+    transition: color var(--theme-transition-duration) var(--theme-transition-timing);
+  }
+  
+  /* Performance-optimized theme switching */
+  .theme-switching {
+    /* Use GPU acceleration for smoother transitions */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  /* Prevent layout shifts during theme transitions */
+  .theme-stable {
+    contain: layout style paint;
+  }
+}
+
+@layer utilities {
+  /* Utility classes for theme performance */
+  .will-change-theme {
+    will-change: background-color, color, border-color, box-shadow;
+  }
+  
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
